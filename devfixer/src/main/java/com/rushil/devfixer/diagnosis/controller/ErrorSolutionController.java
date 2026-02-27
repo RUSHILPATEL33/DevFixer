@@ -21,6 +21,10 @@ public class ErrorSolutionController {
     public ErrorSolution getSolution(@RequestParam String error){
         return service.findByErrorName(error);
     }
+    @GetMapping("/")
+    public String home() {
+        return "DevFixer API is running 🚀";
+    }
     @PostMapping
     public ErrorSolution addSolution(@RequestBody ErrorSolution solution){
         return service.saveSolution(solution);
