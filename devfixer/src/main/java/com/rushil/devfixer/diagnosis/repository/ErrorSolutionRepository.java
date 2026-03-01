@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface ErrorSolutionRepository extends JpaRepository<ErrorSolution, Long> {
     Optional<ErrorSolution> findFirstByErrorPatternIgnoreCase(String errorPattern);
     @Query("SELECT e FROM ErrorSolution e WHERE LOWER(:input) LIKE LOWER(CONCAT('%', e.errorPattern, '%'))")
-    Optional<ErrorSolution> findMatchingSolution(@Param("input") String input);
+    List<ErrorSolution> findAllMatchingSolutions(@Param("input") String input);
 }

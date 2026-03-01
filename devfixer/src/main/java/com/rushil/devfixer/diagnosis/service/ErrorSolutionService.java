@@ -22,10 +22,20 @@ public class ErrorSolutionService {
 
         String normalizedInput = errorName.toLowerCase().trim();
 
-        return repository.findMatchingSolution(normalizedInput)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "No matching solution found for: " + errorName));
+        List<ErrorSolution> matches =
+                repository.findAllMatchingSolutions(normalizedInput);
+
+        if (matches.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No matching solution found for: " + errorName);
+        }
+
+        return matches.stream()
+                .max((a, b) ->
+                        Integer.compare(
+                                a.getErrorPattern().length(),
+                                b.getErrorPattern().length()))
+                .orElseThrow();
     }
     public ErrorSolution saveSolution(ErrorSolution solution){
         return repository.save(solution);
