@@ -19,9 +19,13 @@ public class ErrorSolutionService {
     }
 
     public ErrorSolution findByErrorName(String errorName) {
-        return repository.findFirstByErrorPatternIgnoreCase(errorName)
+
+        String normalizedInput = errorName.toLowerCase().trim();
+
+        return repository.findMatchingSolution(normalizedInput)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("No solution found for: " + errorName));
+                        new ResourceNotFoundException(
+                                "No matching solution found for: " + errorName));
     }
     public ErrorSolution saveSolution(ErrorSolution solution){
         return repository.save(solution);

@@ -8,7 +8,7 @@ public class ErrorSolution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String errorPattern;
+    public String errorPattern;
     private String description;
     private String solution;
 
